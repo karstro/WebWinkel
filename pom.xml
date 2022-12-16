@@ -27,6 +27,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.1</version>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -40,17 +46,10 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>9.8.1</version>
                 <configuration>
-                    <url>jdbc:postgresql://127.0.0.1:5432/initdb</url>
+                    <url>jdbc:postgresql://127.0.0.1:5432/postgres</url>
                     <user>postgres</user>
 					<password>3141</password>
                 </configuration>
-				<dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.5.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
