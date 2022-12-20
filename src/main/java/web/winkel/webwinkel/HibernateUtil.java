@@ -1,6 +1,6 @@
 package web.winkel.webwinkel;
 
-import java.util.Map;
+import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -17,13 +17,14 @@ public class HibernateUtil {
         SessionFactory sessionFactory = null;
         try {
             Configuration config = new Configuration();
-            // config.addAnnotatedClass(Customer.class);
+            // apply properties from hibernate.cfg.xml
             config.configure();
-            Map configProperties = config.getProperties();
+            Properties configProperties = config.getProperties();
+            // create a StandardServiceRegistry
             StandardServiceRegistryBuilder serviceRegisteryBuilder = new StandardServiceRegistryBuilder();
             ServiceRegistry serviceRegistry = serviceRegisteryBuilder.applySettings(configProperties).build();
+            // build the sessionFactory using the config and service registry
             sessionFactory = config.buildSessionFactory(serviceRegistry);
-            return sessionFactory;
         } catch (Exception e) {
             e.printStackTrace();
 	    }
