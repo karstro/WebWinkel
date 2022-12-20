@@ -6,6 +6,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
+import org.hibernate.Transaction;
+import org.hibernate.Session;
+import org.hibernate.HibernateException;
+
 public class HibernateUtil {
 	private static final SessionFactory sessionFactory = buildSessionFactory();
 
@@ -34,5 +38,29 @@ public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
 	    return sessionFactory;
 	}
- 
+    
+    public static void saveObject(Object object) {
+        Transaction tx = null;
+        //Get the session object.
+        Session session = sessionFactory.openSession();
+        try{
+            //Start hibernate session.
+            tx = session.beginTransaction();
+
+            // save the object
+            session.save(object); 
+    
+            //Commit hibernate transaction if no exception occurs.
+            tx.commit();
+        }catch (HibernateException e) {
+            if(tx!=null){
+                //Roll back if any exception occurs. 
+                tx.rollback();
+            }
+            e.printStackTrace(); 
+        }finally {
+            //Close hibernate session.
+            session.close(); 
+        }
+    }
 }

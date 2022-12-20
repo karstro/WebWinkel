@@ -3,10 +3,6 @@ package web.winkel.webwinkel;
 import org.springframework.web.bind.annotation.*;
 import java.sql.*;
 
-import org.hibernate.Transaction;
-import org.hibernate.Session;
-import org.hibernate.HibernateException;
-
 @RestController
 public class Webwinkel {
 
@@ -59,36 +55,15 @@ public class Webwinkel {
         return "Customer: " + name;
     }
 
-    @GetMapping("/hibernateTest")
-    public void getHibernateTest() {
+    @GetMapping("/createCustomer")
+    public void postCustomer(@RequestParam(value = "name", defaultValue = "world") String name, @RequestParam(value = "id", defaultValue = "5") int id) {
         //Create the customer object.
         Customer customer = new Customer();
     
         //Setting the object properties.
-        customer.setId(2);
-        customer.setName("Solenki");
-    
-        Transaction tx = null;
-        //Get the session object.
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try{
-            //Start hibernate session.
-            tx = session.beginTransaction();
-    
-            //Insert a new customer record in the database.
-            session.save(customer); 
-    
-            //Commit hibernate transaction if no exception occurs.
-            tx.commit();
-        }catch (HibernateException e) {
-            if(tx!=null){
-                //Roll back if any exception occurs. 
-                tx.rollback();
-            }
-            e.printStackTrace(); 
-        }finally {
-            //Close hibernate session.
-            session.close(); 
-        }
+        customer.setId(id);
+        customer.setName(name);
+
+        HibernateUtil.saveObject(customer);
     }
 }
