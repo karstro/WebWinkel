@@ -1,4 +1,4 @@
 create table CUSTOMER (
-    Id int Unique not null,
-    Name varchar(100) not null
+    customer_id int unique primary key not null,
+    customer_name varchar(50) not null
 );

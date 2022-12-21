@@ -4,12 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
  
 @Entity  
 @Table(name= "Customer") 
 public class Customer {
 
-	@Id
+	@Id @GeneratedValue
 	@Column(name = "Id", unique = true, nullable = false)
 	private int id;
  
