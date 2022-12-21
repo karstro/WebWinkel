@@ -1,6 +1,7 @@
 package web.winkel.webwinkel;
 
 import org.springframework.web.bind.annotation.*;
+import web.winkel.webwinkel.POJOs.Customer;
 import java.sql.*;
 
 @RestController

@@ -13,9 +13,7 @@ import org.hibernate.HibernateException;
 public class HibernateUtil {
 	private static final SessionFactory sessionFactory = buildSessionFactory();
 
-    private HibernateUtil () {
-        // Constructor
-    }
+    private HibernateUtil () {}
  
 	private static SessionFactory buildSessionFactory() {
         SessionFactory sessionFactory = null;
@@ -42,9 +40,10 @@ public class HibernateUtil {
     public static void saveObject(Object object) {
         Transaction tx = null;
         //Get the session object.
-        Session session = sessionFactory.openSession();
-        try{
+        Session session = null;
+        try {
             //Start hibernate session.
+            session = sessionFactory.openSession();
             tx = session.beginTransaction();
 
             // save the object
@@ -52,15 +51,37 @@ public class HibernateUtil {
     
             //Commit hibernate transaction if no exception occurs.
             tx.commit();
-        }catch (HibernateException e) {
+        } catch (HibernateException e) {
             if(tx!=null){
                 //Roll back if any exception occurs. 
                 tx.rollback();
             }
             e.printStackTrace(); 
-        }finally {
+        } finally {
             //Close hibernate session.
-            session.close(); 
+            if (session != null) {
+                session.close();
+            }
         }
+    }
+    
+    public static Object getObject(Class clazz, int id) {
+        Object object = null;
+        Session session = null;
+        try {
+            // Start hibernate session.
+            session = sessionFactory.openSession();
+
+            // get the object
+            object = session.get(clazz, id);
+        } catch (HibernateException e) {
+            e.printStackTrace(); 
+        } finally {
+            //Close hibernate session.
+            if (session != null) {
+                session.close();
+            }
+        }
+        return object;
     }
 }
