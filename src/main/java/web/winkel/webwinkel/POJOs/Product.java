@@ -5,12 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
  
 @Entity  
 @Table(name= "PRODUCT") 
 public class Product {
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "product_id", unique = true, nullable = false)
 	private int id;
  

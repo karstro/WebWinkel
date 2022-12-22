@@ -37,20 +37,21 @@ public class HibernateUtil {
 	    return sessionFactory;
 	}
     
-    public static void saveObject(Object object) {
+    public static Boolean saveObject(Object object) {
+        Boolean success = false;
         Transaction tx = null;
-        //Get the session object.
         Session session = null;
         try {
-            //Start hibernate session.
+            // Start hibernate session.
             session = sessionFactory.openSession();
             tx = session.beginTransaction();
 
             // save the object
             session.save(object); 
     
-            //Commit hibernate transaction if no exception occurs.
+            // Commit hibernate transaction if no exception occurs.
             tx.commit();
+            success = true;
         } catch (HibernateException e) {
             if(tx!=null){
                 //Roll back if any exception occurs. 
@@ -63,6 +64,7 @@ public class HibernateUtil {
                 session.close();
             }
         }
+        return success;
     }
     
     public static Object getObject(Class clazz, int id) {
@@ -72,12 +74,12 @@ public class HibernateUtil {
             // Start hibernate session.
             session = sessionFactory.openSession();
 
-            // get the object
+            // Get the object
             object = session.get(clazz, id);
         } catch (HibernateException e) {
             e.printStackTrace(); 
         } finally {
-            //Close hibernate session.
+            // Close hibernate session.
             if (session != null) {
                 session.close();
             }

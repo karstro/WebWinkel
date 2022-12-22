@@ -5,12 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
  
 @Entity  
 @Table(name= "CUSTOMER") 
 public class Customer {
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "customer_id", unique = true, nullable = false)
 	private int id;
  
@@ -36,5 +37,9 @@ public class Customer {
  
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String toString() {
+		return Integer.toString(id) + ": " + name;
 	}
 }

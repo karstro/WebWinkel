@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
  
@@ -12,7 +13,7 @@ import javax.persistence.JoinColumn;
 @Table(name= "CARTITEM") 
 public class CartItem {
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "cart_item_id", unique = true, nullable = false)
 	private int id;
 

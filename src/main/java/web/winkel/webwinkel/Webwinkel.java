@@ -2,69 +2,29 @@ package web.winkel.webwinkel;
 
 import org.springframework.web.bind.annotation.*;
 import web.winkel.webwinkel.POJOs.Customer;
-import java.sql.*;
 
 @RestController
 public class Webwinkel {
-
-    private void printSQLException(SQLException e) {
-        e.printStackTrace(System.err);
-        System.err.println("SQLState: " + e.getSQLState());
-        System.err.println("Error Code: " + e.getErrorCode());
-        System.err.println("Message: " + e.getMessage());
-
-        Throwable t = e.getCause();
-        while(t != null) {
-            System.out.println("Cause: " + t);
-            t = t.getCause();
-        }
-    }
-
-    private String sendRequest() throws Exception {
-        String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=3141";
-        String res = "no result";
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            Statement statement = conn.createStatement();
-            String createsql = "INSERT INTO Customer (id, name) VALUES (0, 'Karst');";
-            String sql = "SELECT * FROM Customer;";
-            statement.execute(createsql);
-            ResultSet result = statement.executeQuery(sql);
-            int i = 0;
-            while (result.next()) {
-                i++;
-            }
-            res = Integer.toString(i);
-
-            result.close();
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            printSQLException(e);
-        }
-        return res;
-    }
 
     @GetMapping("/hello")
 	public String helloWorld(@RequestParam(value = "name", defaultValue = "world") String name) {
 		return "Hello " + name;
 	}
 
-    @GetMapping("/getCustomer")
-    public String getCustomer() throws Exception {
-        String name = sendRequest();
-        return "Customer: " + name;
+    @GetMapping("/getCustomer/{id}")
+    public String getCustomer(@PathVariable int id) {
+        // retrieve the customer object with the given id
+        Customer customer = (Customer)HibernateUtil.getObject(Customer.class, id);
+        if (customer == null) {
+            return "Customer with given id does not exist.";
+        }
+        return customer.toString();
     }
 
-    @GetMapping("/createCustomer")
-    public void postCustomer(@RequestParam(value = "name", defaultValue = "world") String name, @RequestParam(value = "id", defaultValue = "5") int id) {
-        //Create the customer object.
-        Customer customer = new Customer();
-    
-        //Setting the object properties.
-        customer.setId(id);
-        customer.setName(name);
-
-        HibernateUtil.saveObject(customer);
+    @PostMapping("/createCustomer")
+    public String createCustomer(@RequestBody Customer customer) {
+        // System.err.println(customer.toString());
+        Boolean success = HibernateUtil.saveObject(customer);
+        return success ? "Customer created successfully with id " + customer.getId() + "." : "Could not create Customer.";
     }
 }

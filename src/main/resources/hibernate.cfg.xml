@@ -19,6 +19,10 @@
         <property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
  
         <!-- Mapping With Model Class Containing Annotations -->
-        <mapping class="web.winkel.webwinkel.Customer" />
+        <mapping class="web.winkel.webwinkel.POJOs.Customer" />
+        <mapping class="web.winkel.webwinkel.POJOs.Product" />
+        <mapping class="web.winkel.webwinkel.POJOs.Order" />
+        <mapping class="web.winkel.webwinkel.POJOs.OrderItem" />
+        <mapping class="web.winkel.webwinkel.POJOs.CartItem" />
     </session-factory>
 </hibernate-configuration>
