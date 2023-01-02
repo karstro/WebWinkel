@@ -1,4 +1,4 @@
-package web.winkel.webwinkel.POJOs;
+package web.winkel.webwinkel.pojos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

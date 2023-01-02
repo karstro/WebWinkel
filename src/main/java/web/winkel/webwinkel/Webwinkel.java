@@ -1,7 +1,8 @@
 package web.winkel.webwinkel;
 
 import org.springframework.web.bind.annotation.*;
-import web.winkel.webwinkel.POJOs.Customer;
+
+import web.winkel.webwinkel.pojos.Customer;
 
 @RestController
 public class Webwinkel {
@@ -23,8 +24,7 @@ public class Webwinkel {
 
     @PostMapping("/createCustomer")
     public String createCustomer(@RequestBody Customer customer) {
-        // System.err.println(customer.toString());
         Boolean success = HibernateUtil.saveObject(customer);
-        return success ? "Customer created successfully with id " + customer.getId() + "." : "Could not create Customer.";
+        return Boolean.TRUE.equals(success) ? "Customer created successfully with id " + customer.getId() + "." : "Could not create Customer.";
     }
 }
