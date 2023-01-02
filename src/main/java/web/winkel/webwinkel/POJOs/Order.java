@@ -7,11 +7,15 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import java.sql.Date;
+import java.util.List;
  
 @Entity  
-@Table(name= "ORDER") 
+@Table(name= "\"ORDER\"") 
 public class Order {
 
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -27,6 +31,9 @@ public class Order {
  
 	@Column(name = "order_shipped")
 	private Boolean shipped;
+
+    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
  
 	public Order() {}
 	public Order(Customer customer, Date date, Boolean shipped) {
@@ -65,5 +72,14 @@ public class Order {
  
 	public void setShipped(Boolean shipped) {
 		this.shipped = shipped;
+	}
+
+	public String toString() {
+        StringBuilder sb = new StringBuilder(Integer.toString(id) + " {\n");
+        for (OrderItem orderItem : orderItems) {
+            sb.append("  " + orderItem.toString() + "\n");
+        }
+        sb.append("}");
+		return sb.toString();
 	}
 }

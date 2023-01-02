@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.HibernateException;
 
 public class HibernateUtil {
+    
 	private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private HibernateUtil () {}
