@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.HibernateException;
 
+import java.util.List;
+
 public class HibernateUtil {
     
 	private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -86,5 +88,25 @@ public class HibernateUtil {
             }
         }
         return object;
+    }
+
+    public static List<Object> getSQLResults(String query) {
+        List<Object> result = null;
+        Session session = null;
+        try {
+            // Start hibernate session.
+            session = sessionFactory.openSession();
+
+            // Get the object
+            result = (List<Object>)session.createSQLQuery(query).list();
+        } catch (HibernateException e) {
+            e.printStackTrace(); 
+        } finally {
+            // Close hibernate session.
+            if (session != null) {
+                session.close();
+            }
+        }
+        return result;
     }
 }
