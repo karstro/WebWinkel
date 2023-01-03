@@ -1,4 +1,4 @@
-package web.winkel.webwinkel.POJOs;
+package web.winkel.webwinkel.pojos;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,5 +65,9 @@ public class OrderItem {
  
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+    
+	public String toString() {
+		return Integer.toString(id) + ": " + amount + " " + product.getName();
 	}
 }
