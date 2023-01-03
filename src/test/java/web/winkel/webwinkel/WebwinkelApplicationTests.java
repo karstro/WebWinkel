@@ -2,17 +2,20 @@ package web.winkel.webwinkel;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-// import org.springframework.boot.test.context.SpringBootTest;
 
-// @SpringBootTest
 public class WebwinkelApplicationTests {
 
-	@Test
-	void contextLoads() {}
+    private final Webwinkel webwinkel = new Webwinkel();
 
     @Test
     void testAssert() {
         Assertions.assertTrue(true);
+    }
+
+    @Test
+    void getCustomerTest() {
+        String customer = webwinkel.getObject("Customer", 10);
+        Assertions.assertEquals("10: Person1", customer);
     }
 
 }
