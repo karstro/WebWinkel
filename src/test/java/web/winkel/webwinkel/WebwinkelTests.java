@@ -3,7 +3,7 @@ package web.winkel.webwinkel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-public class WebwinkelApplicationTests {
+public class WebwinkelTests {
 
     private final Webwinkel webwinkel = new Webwinkel();
 
