@@ -43,7 +43,7 @@ public class Webwinkel {
         // retrieve the object with the given id
         Object result = HibernateUtil.getObject(clazz, id);
         if (result == null) {
-            return clazz.getSimpleName() + " with given id does not exist.";
+            return clazz.getSimpleName() + " with id " + Integer.toString(id) + " does not exist.";
         }
         return result.toString();
     }

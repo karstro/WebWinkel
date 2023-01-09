@@ -66,4 +66,8 @@ public class CartItem {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
+	public String toString() {
+		return Integer.toString(id) + ": " + Integer.toString(amount) + " " + product.getName() + " for " + customer.getName();
+	}
 }

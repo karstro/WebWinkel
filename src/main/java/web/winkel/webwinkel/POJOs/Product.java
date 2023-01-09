@@ -62,4 +62,8 @@ public class Product {
 	public void setReserved(int reserved) {
 		this.reserved = reserved;
 	}
+
+	public String toString() {
+		return Integer.toString(id) + ": " + stock + " - " + reserved + " " + name;
+	}
 }
