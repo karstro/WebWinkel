@@ -18,6 +18,12 @@ public class Webwinkel {
         return Boolean.TRUE.equals(success) ? "Customer created successfully with id " + customer.getId() + "." : "Could not create Customer.";
     }
 
+    @GetMapping("/getCustomer/{id}")
+    public Customer getCustomer(@PathVariable int id) {
+        // retrieve the object with the given id
+        return (Customer)HibernateUtil.getObject(Customer.class, id);
+    }
+
     @GetMapping("/get{object}/{id}")
     public String getObject(@PathVariable String object, @PathVariable int id) {
         Class clazz = null;
