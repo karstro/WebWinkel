@@ -18,11 +18,12 @@ public class HibernateUtil {
 
     private HibernateUtil () {}
  
+    // try to build the session factory, report any errors that occured
 	private static SessionFactory buildSessionFactory() {
         SessionFactory sessionFactory = null;
         try {
-            Configuration config = new Configuration();
             // apply properties from hibernate.cfg.xml
+            Configuration config = new Configuration();
             config.configure();
             Properties configProperties = config.getProperties();
             // create a StandardServiceRegistry
@@ -40,6 +41,7 @@ public class HibernateUtil {
 	    return sessionFactory;
 	}
     
+    // save a POJO to the database using a session
     public static Boolean saveObject(Object object) {
         Boolean success = false;
         Transaction tx = null;
@@ -70,6 +72,7 @@ public class HibernateUtil {
         return success;
     }
     
+    // get an object with a certain type and id
     public static Object getObject(Class clazz, int id) {
         Object object = null;
         Session session = null;
@@ -90,6 +93,7 @@ public class HibernateUtil {
         return object;
     }
 
+    // execute an SQL query in the database and return the results as a list of POJOs
     public static List<Object> getSQLResults(String query) {
         List<Object> result = null;
         Session session = null;
@@ -97,7 +101,7 @@ public class HibernateUtil {
             // Start hibernate session.
             session = sessionFactory.openSession();
 
-            // Get the object
+            // Get the objects
             result = (List<Object>)session.createSQLQuery(query).list();
         } catch (HibernateException e) {
             e.printStackTrace(); 
